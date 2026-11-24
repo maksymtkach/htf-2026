@@ -6,5 +6,5 @@ import type { Glitch } from '#/lib/glitch.ts'
 
 export const getGlitches = createServerFn({ method: 'GET' }).handler(
   async (): Promise<Glitch[]> =>
-    db.select().from(glitches).orderBy(desc(glitches.timestamp)).all(),
+    db.select().from(glitches).orderBy(desc(glitches.timestamp)),
 )

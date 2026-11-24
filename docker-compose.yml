@@ -22,7 +22,7 @@ services:
       DATABASE_URL: postgres://guardians:guardians@db:5432/guardians
     depends_on:
       - db
-    command: sh -c "npm run db:push && npm run dev -- --host 0.0.0.0"
+    command: sh -c "npm run db:push && npm run db:seed && npm run dev"
 
 volumes:
   db_data:

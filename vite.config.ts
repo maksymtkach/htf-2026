@@ -17,6 +17,7 @@ const IGNORED_SERVER_WARNINGS = new Set([
 
 const config = defineConfig({
   resolve: { tsconfigPaths: true },
+  server: { host: true },
   plugins: [
     devtools(),
     nitro({
