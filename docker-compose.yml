@@ -1,4 +1,16 @@
 services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: guardians
+      POSTGRES_PASSWORD: guardians
+      POSTGRES_DB: guardians
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
   app:
     build: .
     ports:
@@ -6,10 +18,10 @@ services:
     volumes:
       - .:/app
       - /app/node_modules
-      - db_data:/data
     environment:
-      DB_FILE_NAME: /data/app.db
-    # Push schema migrations then start dev server (run db:seed manually to populate)
+      DATABASE_URL: postgres://guardians:guardians@db:5432/guardians
+    depends_on:
+      - db
     command: sh -c "npm run db:push && npm run dev -- --host 0.0.0.0"
 
 volumes:
