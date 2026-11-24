@@ -1,7 +1,9 @@
 import { Link } from '@tanstack/react-router'
-import { Shield, WandSparkles, Swords, LayoutGrid, type LucideIcon } from 'lucide-react'
+import { Shield, WandSparkles, Swords, LayoutGrid,MessageCircle, type LucideIcon } from 'lucide-react'
+import ChatWindow from '../../AiChat/ChatWindow.tsx' // adjust the path to where the file is
 import { useState } from 'react'
 import { useGuardian, type Role } from '#/roles/Guardian.tsx'
+
 
 export function UserButton() {
     const [open, setOpen] = useState(false)
@@ -68,7 +70,6 @@ export function UserButton() {
 type NavItem = {
     label: string
     icon: LucideIcon
-    /** Only set for pages that already have a route. */
     to?: '/'
 }
 
@@ -76,13 +77,13 @@ const navItems: NavItem[] = [
     { label: 'Overview', icon: LayoutGrid, to: '/' },
 ]
 
-// Icon-only items: the label lives in aria-label/title for screen readers and hover.
 const itemClass =
     'flex size-12 items-center justify-center rounded-lg text-white/70 transition-colors hover:bg-white/10 hover:text-white'
 const activeClass = 'bg-white/10 text-white'
 
 export function Sidebar() {
     const { guardian } = useGuardian()
+    const [chatOpen, setChatOpen] = useState(false)
     const LogoIcon = guardian.role === 'Commander' ? WandSparkles : Shield
 
     return (
@@ -94,6 +95,7 @@ export function Sidebar() {
             <nav className="flex w-full flex-1 flex-col items-center gap-1">
                 {navItems.map(({ label, icon: Icon, to }) => {
                     const icon = <Icon className="size-6" strokeWidth={1.5} />
+
                     return to ? (
                         <Link
                             key={label}
@@ -107,16 +109,34 @@ export function Sidebar() {
                             {icon}
                         </Link>
                     ) : (
-                        <button key={label} type="button" aria-label={label} title={label} className={itemClass}>
+                        <button
+                            key={label}
+                            type="button"
+                            aria-label={label}
+                            title={label}
+                            className={itemClass}
+                        >
                             {icon}
                         </button>
                     )
                 })}
+
+                <button
+                    type="button"
+                    aria-label="AI chat"
+                    title="AI chat"
+                    onClick={() => setChatOpen((o) => !o)}
+                    className={`${itemClass} ${chatOpen ? activeClass : ''}`}
+                >
+                    <MessageCircle className="size-6" strokeWidth={1.5} />
+                </button>
             </nav>
 
             <div className="flex w-full flex-col items-center gap-4">
                 <UserButton />
             </div>
+
+            <ChatWindow open={chatOpen} onClose={() => setChatOpen(false)} />
         </aside>
     )
 }
