@@ -37,7 +37,7 @@ export function GlitchesTable({ glitches }: { glitches: Glitch[] }) {
                     {timestampFormat.format(new Date(glitch.timestamp))}
                   </time>
                 </td>
-                <td className="px-5 py-4 text-center">
+                <td className="account px-5 py-4 text-center">
                   <IconButton aria-label={`${glitch.glitchId} actions`}>
                     <EllipsisVertical className="size-5" />
                   </IconButton>
@@ -50,3 +50,5 @@ export function GlitchesTable({ glitches }: { glitches: Glitch[] }) {
     </section>
   )
 }
+
+

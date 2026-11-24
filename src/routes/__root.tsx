@@ -7,6 +7,8 @@ import {
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 import { Sidebar } from '#/components/layout/Sidebar'
+import { useGuardian,GuardianProvider , type Role } from '#/roles/Guardian.tsx'
+
 
 import appCss from '../styles.css?url'
 
@@ -25,12 +27,14 @@ export const Route = createRootRoute({
 
 function AppLayout() {
   return (
-    <div className="flex min-h-screen">
-      <Sidebar />
-      <main className="min-w-0 flex-1 px-16 py-10">
-        <Outlet />
-      </main>
-    </div>
+      <GuardianProvider>
+        <div className="flex min-h-screen">
+          <Sidebar />
+          <main className="min-w-0 flex-1 px-16 py-10">
+            <Outlet />
+          </main>
+        </div>
+      </GuardianProvider>
   )
 }
 
