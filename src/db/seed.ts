@@ -33,3 +33,4 @@ await db.transaction(async (tx) => {
 })
 
 console.log(`Seeded ${guardianRows.length} guardians, ${glitchRows.length} glitches, ${echoRows.length} echoes.`)
+process.exit(0)
