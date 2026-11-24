@@ -1,13 +1,14 @@
 import { Link } from '@tanstack/react-router'
-import { Shield, WandSparkles, LayoutGrid, User, type LucideIcon } from 'lucide-react'
+import { Shield, WandSparkles, Swords, LayoutGrid, type LucideIcon } from 'lucide-react'
 import { useState } from 'react'
-import { useGuardian, GuardianProvider,type Role } from '#/roles/Guardian.tsx'
+import { useGuardian, type Role } from '#/roles/Guardian.tsx'
 
 export function UserButton() {
     const [open, setOpen] = useState(false)
     const [windowOpen, setWindowOpen] = useState(false)
     const [minimized, setMinimized] = useState(false)
     const { guardian, setRole } = useGuardian()
+    const RoleIcon = guardian.role === 'Commander' ? WandSparkles : Swords
 
     const handleSelect = (r: Role) => {
         setRole(r)
@@ -20,9 +21,12 @@ export function UserButton() {
             <button
                 type="button"
                 onClick={() => setOpen(!open)}
-                className="flex size-10 cursor-pointer items-center justify-center rounded-full border border-line bg-white text-fg hover:bg-subtle"
+                aria-label="User menu"
+                title={`${guardian.role} menu`}
+                className="flex size-11 cursor-pointer items-center justify-center rounded-full border-2 border-accent-from bg-linear-to-br from-accent-from to-accent-to text-white shadow-lg transition-transform hover:scale-110"
+                style={{ boxShadow: 'var(--role-glow)' }}
             >
-                <User className="size-5" strokeWidth={1.75} />
+                <RoleIcon className="size-6" strokeWidth={2} />
             </button>
 
             {open && (
