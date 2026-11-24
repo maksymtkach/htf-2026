@@ -1,0 +1,16 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - db_data:/data
+    environment:
+      DB_FILE_NAME: /data/app.db
+    # Push schema migrations then start dev server (run db:seed manually to populate)
+    command: sh -c "npm run db:push && npm run dev -- --host 0.0.0.0"
+
+volumes:
+  db_data:
