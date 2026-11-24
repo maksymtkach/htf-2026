@@ -20,7 +20,7 @@ services:
       - /app/node_modules
     environment:
       DATABASE_URL: postgres://guardians:guardians@db:5432/guardians
-      GROQ_API_KEY: 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
+
     depends_on:
       - db
     command: sh -c "npm run db:push && npm run db:seed && npm run dev"
